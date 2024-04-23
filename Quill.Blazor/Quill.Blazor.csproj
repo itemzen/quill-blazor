@@ -8,7 +8,7 @@
         <VersionPrefix>2.0.0</VersionPrefix>
         <Authors>Itemzen</Authors>
         <Copyright>2024 by Itemzen</Copyright>
-        <PackageId>Quill.Blazor</PackageId>
+        <PackageId>Itemzen.Quill.Blazor</PackageId>
         <PublishRelease>true</PublishRelease>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <OutputType>Library</OutputType>
@@ -19,7 +19,7 @@
         <PackageTags>quill.js;Blazor;dotnet</PackageTags>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <SourceLinkCreate>true</SourceLinkCreate>
-        <SourceLinkOriginUrl>https://github.com/itemzen/gridstack-blazor</SourceLinkOriginUrl>
+        <SourceLinkOriginUrl>https://github.com/itemzen/quill-blazor</SourceLinkOriginUrl>
         <NoWarn>1591</NoWarn>
     </PropertyGroup>
 

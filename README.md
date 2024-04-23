@@ -1,4 +1,4 @@
-# Quill.Blazor
+# Itemzen.Quill.Blazor
 
 (Minimal) Blazor wrapper for the [quilljs](https://quilljs.com/) library.
 
@@ -7,7 +7,7 @@
 ### NuGet
 
 ```bash
-dotnet add package Quill.Blazor
+dotnet add package Itemzen.Quill.Blazor
 ```
 
 The version of the nuget package matches the quill version against which the wrapper was created,
