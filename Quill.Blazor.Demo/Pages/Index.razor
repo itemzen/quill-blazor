@@ -1,5 +1,92 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<div class="wrapper">
+    <div class="content">
 
-<h1>Clean Blazor</h1>
+        <div style="margin: 20px 0; display: flex; ">
+            <button @onclick="@PrintText">Print Text</button>
+            <button @onclick="@PrintHtml" style="margin-left: 10px">Print Html</button>
+            <button @onclick="@LoadHtml" style="margin-left: 10px">Load Html</button>
+            <button @onclick="@ToggleEnabled" style="margin-left: 10px">@(_isEnabled ? "Disable" : "Enable")</button>
+        </div>
+        
+        <div class="toolbar-wrapper">
+            <QuillToolbar Id="@ToolbarId" Class="toolbar">
+                <QuillToolbarGroup>
+                    <QuillToolbarSelect 
+                        Format="@QuillFormat.Header" 
+                        Values="@QuillValue.Headers"/>
+                </QuillToolbarGroup>
+                <QuillToolbarGroup>
+                    <QuillToolbarButton Format="@QuillFormat.Bold"/>
+                    <QuillToolbarButton Format="@QuillFormat.Italic"/>
+                    <QuillToolbarButton Format="@QuillFormat.Underline"/>
+                    <QuillToolbarButton Format="@QuillFormat.Strikethrough"/>
+                </QuillToolbarGroup>
+                <QuillToolbarGroup>
+                    <QuillToolbarButton
+                        Format="@QuillFormat.List"
+                        Value="@QuillValue.OrderedList"/>
+                    <QuillToolbarButton
+                        Format="@QuillFormat.List"
+                        Value="@QuillValue.BulletList"/>
+                </QuillToolbarGroup>
+            </QuillToolbar>
+        </div>
+
+        <div class="editor-wrapper">
+            <QuillEditor @ref="@_editor" ToolbarId="@ToolbarId" Options="@_options" Class="editor"/>
+        </div>
+
+    </div>
+</div>
+
+
+@code
+{
+    private const string ToolbarId = "toolbar";
+
+    private readonly QuillOptions _options = new()
+    {
+        Debug = "warn", // log, info, warn, error
+        Placeholder = "Start typing...",
+        IsReadOnly = false,
+        Theme = "snow" // null, snow, bubble
+    };
+
+    private bool _isEnabled = true;
+    
+    private QuillEditor _editor = null!;
+
+    private async Task PrintText()
+    {
+        var text = await _editor.GetText();
+        Console.WriteLine(text.Trim());
+    }
+
+    private async Task PrintHtml()
+    {
+        var html = await _editor.GetHtml();
+        Console.WriteLine(html.Trim());
+    }
+
+    private async Task LoadHtml()
+    {
+        const string html = "<p>Loaded <strong>HTML</strong>!</p>";
+        await _editor.LoadHtml(html);
+    }
+
+    private async Task ToggleEnabled()
+    {
+        if (_isEnabled)
+        {
+            await _editor.Disable();
+        }
+        else
+        {
+            await _editor.Enable();
+        }
+        
+        _isEnabled = !_isEnabled;
+    }
+}

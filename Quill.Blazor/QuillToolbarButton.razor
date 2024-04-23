@@ -1,0 +1,12 @@
+<button class="ql-@(Format) @(Class)" style="@Style" value="@Value"></button>
+
+@code
+{
+    [Parameter] public string? Format { get; set; }
+
+    [Parameter] public string? Value { get; set; }
+    
+    [Parameter] public string Class { get; set; } = string.Empty;
+    
+    [Parameter] public string Style { get; set; } = string.Empty;
+}

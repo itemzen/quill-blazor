@@ -1,0 +1,14 @@
+<div id="@Id" class="@Class" style="@Style">
+    @ChildContent
+</div>
+
+@code
+{
+    [Parameter] public string? Id { get; set; }
+
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    [Parameter] public string Style { get; set; } = string.Empty;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

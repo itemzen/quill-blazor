@@ -1,0 +1,24 @@
+<select class="ql-@(Format) @(Class)" style="@Style">
+    @foreach (var value in Values)
+    {
+        if (value == null)
+        {
+            <option selected></option>
+        }
+        else
+        {
+            <option value="@value"></option>   
+        }
+    }
+</select>
+
+@code
+{
+    [Parameter] public string? Format { get; set; }
+
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    [Parameter] public string Style { get; set; } = string.Empty;
+
+    [Parameter] public List<string?> Values { get; set; } = new();
+}

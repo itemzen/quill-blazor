@@ -1,0 +1,12 @@
+<div class="ql-formats @(Class)" style="@Style">
+    @ChildContent
+</div>
+
+@code
+{
+    [Parameter] public string Class { get; set; } = string.Empty;
+
+    [Parameter] public string Style { get; set; } = string.Empty;
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}

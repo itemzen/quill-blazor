@@ -15,4 +15,8 @@
       <ProjectReference Include="..\Quill.Blazor\Quill.Blazor.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\lib\" />
+    </ItemGroup>
+
 </Project>
