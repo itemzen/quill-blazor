@@ -1,8 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Files", "_Files", "{5A9270A6-3C64-43DB-95E4-08F51032B5B5}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		pack.sh = pack.sh
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quill.Blazor", "Quill.Blazor\Quill.Blazor.csproj", "{FC071ABD-26B5-4AB2-9A6F-A395EC8F8679}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quill.Blazor.Demo", "Quill.Blazor.Demo\Quill.Blazor.Demo.csproj", "{51D3F6E7-47DF-4039-825E-0BC0E2F28C3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC071ABD-26B5-4AB2-9A6F-A395EC8F8679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC071ABD-26B5-4AB2-9A6F-A395EC8F8679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC071ABD-26B5-4AB2-9A6F-A395EC8F8679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC071ABD-26B5-4AB2-9A6F-A395EC8F8679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51D3F6E7-47DF-4039-825E-0BC0E2F28C3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D3F6E7-47DF-4039-825E-0BC0E2F28C3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D3F6E7-47DF-4039-825E-0BC0E2F28C3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D3F6E7-47DF-4039-825E-0BC0E2F28C3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
