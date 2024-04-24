@@ -1,15 +1,15 @@
-export function init(editor, toolbar, options, interopReference) {
+export function init(editor, toolbarId, options, interopReference) {
 
-    if(toolbar) {
+    if(toolbarId) {
         options["modules"] = {
-            'toolbar': '#' + toolbar
+            'toolbar': '#' + toolbarId
         };
     }
     
     const quill = new Quill(editor, options);
     
     quill.loadHtml = (html) => {
-        quill.root.innerHTML = html;
+        quill.clipboard.dangerouslyPasteHTML(html);
     }
 
     quill.setPlaceholder = (placeholder) => {
