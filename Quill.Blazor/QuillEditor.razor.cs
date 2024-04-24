@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -18,23 +17,27 @@ public sealed partial class QuillEditor : IAsyncDisposable
 
     [Parameter] public string Style { get; set; } = string.Empty;
 
+    [Parameter] public EventCallback<QuillTextChangeEventArgs> OnTextChange { get; set; }
+    
     private IJSObjectReference? _module;
     private ElementReference _editor;
     private IJSObjectReference? _instance;
+    private DotNetObjectReference<QuillEditor>? _interopRef;
 
+    private const string PackageName = "Itemzen.Quill.Blazor";
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
 
         if (firstRender)
         {
-            var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
-
             _module ??= await JsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", $"./_content/{assemblyName}/quill_interop.js");
+                "import", $"./_content/{PackageName}/quill_interop.js");
 
+            _interopRef = DotNetObjectReference.Create(this);
             _instance = await _module.InvokeAsync<IJSObjectReference>(
-                "init", _editor, ToolbarId, Options);
+                "init", _editor, ToolbarId, Options, _interopRef);
         }
     }
 
@@ -53,6 +56,16 @@ public sealed partial class QuillEditor : IAsyncDisposable
         await _instance!.InvokeVoidAsync("loadHtml", html);
     }
 
+    public async Task SetPlaceholder(string placeholder)
+    {
+        await _instance!.InvokeVoidAsync("setPlaceholder", placeholder);
+    }
+    
+    public async Task<int> GetLength()
+    {
+        return await _instance!.InvokeAsync<int>("getLength");
+    }
+
     public async Task Enable()
     {
         await _instance!.InvokeVoidAsync("enable");
@@ -63,8 +76,21 @@ public sealed partial class QuillEditor : IAsyncDisposable
         await _instance!.InvokeVoidAsync("disable");
     }
 
+    [JSInvokable]
+    public Task TextChanged(string delta, string oldContents, string source)
+    {
+        var args = new QuillTextChangeEventArgs(delta, oldContents, source);
+        return OnTextChange.InvokeAsync(args);
+    }
+    
     public async ValueTask DisposeAsync()
     {
+        if (_interopRef != null)
+        {
+            _interopRef.Dispose();
+            _interopRef = null;
+        }
+        
         if (_instance != null)
         {
             await _instance.DisposeAsync();

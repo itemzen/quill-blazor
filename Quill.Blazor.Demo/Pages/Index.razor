@@ -8,6 +8,8 @@
             <button @onclick="@PrintHtml" style="margin-left: 10px">Print Html</button>
             <button @onclick="@LoadHtml" style="margin-left: 10px">Load Html</button>
             <button @onclick="@ToggleEnabled" style="margin-left: 10px">@(_isEnabled ? "Disable" : "Enable")</button>
+            <button @onclick="@PrintLength" style="margin-left: 10px">Print Length</button>
+            <button @onclick="@SetPlaceholder" style="margin-left: 10px">Set Placeholder</button>
         </div>
         
         <div class="toolbar-wrapper">
@@ -35,16 +37,29 @@
         </div>
 
         <div class="editor-wrapper">
-            <QuillEditor @ref="@_editor" ToolbarId="@ToolbarId" Options="@_options" Class="editor"/>
+            <QuillEditor 
+                @ref="@_editor" 
+                ToolbarId="@ToolbarId" 
+                Options="@_options" 
+                Class="editor"
+                OnTextChange="@OnTextChanged"/>
         </div>
 
+        <div style="margin-top: 20px; color: @_currentColor">
+            <span>Length: @_currentLength / @MaxLength</span>
+        </div>
+        
     </div>
 </div>
 
 
 @code
 {
+    private const string ValidColor = "#9EABB4";
+    private const string ErrorColor = "#FBA6A6";
+    
     private const string ToolbarId = "toolbar";
+    private const int MaxLength = 100;
 
     private readonly QuillOptions _options = new()
     {
@@ -55,6 +70,8 @@
     };
 
     private bool _isEnabled = true;
+    private int _currentLength;
+    private string _currentColor = ValidColor;
     
     private QuillEditor _editor = null!;
 
@@ -88,5 +105,22 @@
         }
         
         _isEnabled = !_isEnabled;
+    }
+
+    private async Task PrintLength()
+    {
+        var length = await _editor.GetLength();
+        Console.WriteLine($"Length: {length}");
+    }
+
+    private async Task SetPlaceholder()
+    {
+        await _editor.SetPlaceholder("This is a different placeholder!");
+    }
+
+    private async Task OnTextChanged(QuillTextChangeEventArgs args)
+    {
+        _currentLength = await _editor.GetLength() - 1;
+        _currentColor = _currentLength > MaxLength ? ErrorColor : ValidColor;
     }
 }
