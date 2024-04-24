@@ -7,13 +7,13 @@ h1:focus {
 }
 
 /* quill styling*/
-.toolbar {
+.ql-toolbar {
     border: none !important;
     background-color: transparent !important;
     padding: 0 !important;
 }
 
-.editor {
+.ql-container {
     border: none !important;
     font-size: 1.0rem !important;
     font-family: sans-serif !important;
@@ -26,7 +26,6 @@ h1:focus {
 .ql-editor.ql-blank::before {
     left: 0 !important;
 }
-
 
 #blazor-error-ui {
     background: lightyellow;

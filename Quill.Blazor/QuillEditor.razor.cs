@@ -17,7 +17,9 @@ public sealed partial class QuillEditor : IAsyncDisposable
 
     [Parameter] public string Style { get; set; } = string.Empty;
 
-    [Parameter] public EventCallback<QuillTextChangeEventArgs> OnTextChange { get; set; }
+    [Parameter] public EventCallback OnLoaded { get; set; }
+
+    [Parameter] public EventCallback<QuillTextChangeEventArgs> OnTextChanged { get; set; }
     
     private IJSObjectReference? _module;
     private ElementReference _editor;
@@ -38,6 +40,8 @@ public sealed partial class QuillEditor : IAsyncDisposable
             _interopRef = DotNetObjectReference.Create(this);
             _instance = await _module.InvokeAsync<IJSObjectReference>(
                 "init", _editor, ToolbarId, Options, _interopRef);
+            
+            await OnLoaded.InvokeAsync();
         }
     }
 
@@ -80,7 +84,7 @@ public sealed partial class QuillEditor : IAsyncDisposable
     public Task TextChanged(string delta, string oldContents, string source)
     {
         var args = new QuillTextChangeEventArgs(delta, oldContents, source);
-        return OnTextChange.InvokeAsync(args);
+        return OnTextChanged.InvokeAsync(args);
     }
     
     public async ValueTask DisposeAsync()

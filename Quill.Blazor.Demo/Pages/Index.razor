@@ -13,7 +13,7 @@
         </div>
         
         <div class="toolbar-wrapper">
-            <QuillToolbar Id="@ToolbarId" Class="toolbar">
+            <QuillToolbar Id="@ToolbarId">
                 <QuillToolbarGroup>
                     <QuillToolbarSelect 
                         Format="@QuillFormat.Header" 
@@ -40,9 +40,9 @@
             <QuillEditor 
                 @ref="@_editor" 
                 ToolbarId="@ToolbarId" 
-                Options="@_options" 
-                Class="editor"
-                OnTextChange="@OnTextChanged"/>
+                Options="@_options"
+                OnLoaded="@OnEditorLoaded"
+                OnTextChanged="@OnTextChanged"/>
         </div>
 
         <div style="margin-top: 20px; color: @_currentColor">
@@ -122,5 +122,10 @@
     {
         _currentLength = await _editor.GetLength() - 1;
         _currentColor = _currentLength > MaxLength ? ErrorColor : ValidColor;
+    }
+
+    private static void OnEditorLoaded()
+    {
+        Console.WriteLine("Editor loaded");
     }
 }
